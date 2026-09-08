@@ -5,7 +5,20 @@ A zero-dependency, high-performance Vector Database built strictly with Python a
 This engine implements an exact brute-force index (L2-normalized cosine via Level-3 BLAS GEMM) alongside an approximate **IVF-Flat** index featuring **Spherical K-Means++**, optional **8-bit Scalar Quantization (IVF-SQ8)**, dynamic adaptive probe routing, and zero-copy tombstone deletions.
 
 ---
+## Production vs. Mocked Implementation Details
 
+* **Real & Built From Scratch**:
+  * Exact brute-force vector search via BLAS GEMM (`Q @ X.T`) and localized partitioning.
+  * Spherical K-Means++ clustering and centroid update loop.
+  * Inverted File (IVF-Flat) posting list management, dynamic routing, and search pruning.
+  * 8-bit Scalar Quantization (SQ8) dynamic scaling and distance evaluation.
+  * Live vector and document insertion, tombstone-based deletions, and semantic threshold purging.
+* **Mocked / Out-of-Scope (Educational Scope)**:
+  * **Persistence**: Indices and posting lists live in process memory (`RAM`); they reload from generated `.npz` files rather than using a memory-mapped disk layout (`np.memmap`) or WAL (Write-Ahead Log).
+  * **Networking / RPC**: The engine runs as an in-process library and Streamlit application rather than exposing a standalone gRPC/REST HTTP microservice.
+  * **Concurrency**: Thread-safety locks (`RWLock`) for concurrent reader-writer workers are omitted.
+
+---
 ## Key Architectural Highlights
 
 * **Pure Vectorized Operations**: No Python loops in the search or distance calculation paths. Centroid training utilizes one-hot GEMM updates, and candidate partitioning uses `np.argpartition` for $O(N)$ candidate selection followed by localized sorting.
