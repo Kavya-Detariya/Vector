@@ -53,6 +53,7 @@ vector-db/
     ├── test_exact.py           # Correctness, deletion, and batch parity tests for exact index
     ├── test_ivf.py             # Monotonic recall and shape tests for IVF-Flat
     └── test_ivf_advanced.py    # K-Means++ balance, SQ8 fidelity, and dynamic probe tests
+```
 Installation & SetupThis project is managed using uv for reproducible, fast virtual environments. Standard pip is also supported.Using uv (Recommended)Bash# Clone the repository
 git clone <your-repo-url>
 cd vector-db
