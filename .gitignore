@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Generated vectors
+*.npz
+
+# structure files
+create-structure.ps1
+
+#generated graphes
+*.png
+
+#benchmark files
+*.csv

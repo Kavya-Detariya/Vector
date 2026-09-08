@@ -9,6 +9,13 @@ from __future__ import annotations
 import time
 import numpy as np
 
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
+OUT_PATH = DATA_DIR / "ground_truth.npz"
+
+
 from index_exact import ExactIndex
 from data_gen import build_dataset
 
@@ -43,12 +50,12 @@ def main():
     print(f"exact search  p50={p50:.3f}ms  p99={p99:.3f}ms  QPS={qps:.1f}")
 
     np.savez(
-        "ground_truth.npz",
-        queries=queries,
-        gt_ids=gt_ids,
-        gt_scores=gt_scores,
-        vectors=vectors,
-        ids=ids,
+     OUT_PATH,
+     queries=queries,
+     gt_ids=gt_ids,
+     gt_scores=gt_scores,
+     vectors=vectors,
+     ids=ids,
     )
     print("saved ground_truth.npz (queries, gt_ids, gt_scores, vectors, ids)")
 

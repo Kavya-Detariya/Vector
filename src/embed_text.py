@@ -14,12 +14,16 @@ from __future__ import annotations
 import sys
 import numpy as np
 
+from pathlib import Path
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
+sys.path.insert(0, str(SRC_DIR))
+
 from text_corpus import generate_text_corpus
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 N_TEXTS = 5000
 SEED = 42
-OUT_PATH = "text_embeddings.npz"
+OUT_PATH = "data/text_embeddings.npz"
 
 
 def main():
@@ -44,7 +48,7 @@ def main():
     assert embeddings.shape == (N_TEXTS, 384), embeddings.shape
 
     np.savez(
-        OUT_PATH,
+        "data/text_embeddings.npz",
         embeddings=embeddings,
         texts=np.array(texts, dtype=object),
         labels=np.array(labels, dtype=object),

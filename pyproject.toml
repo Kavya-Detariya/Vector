@@ -1,0 +1,13 @@
+[project]
+name = "vector-db"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.11.1",
+    "numpy>=2.5.3",
+    "sentence-transformers>=6.0.1",
+    "streamlit>=1.63.0",
+    "torchvision>=0.29.0",
+]

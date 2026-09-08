@@ -22,6 +22,9 @@ import argparse
 import csv
 import time
 from pathlib import Path
+import sys
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
+sys.path.insert(0, str(SRC_DIR))
 
 import numpy as np
 import matplotlib
@@ -67,7 +70,7 @@ def load_synthetic():
     return vectors, ids, queries, D
 
 
-def load_real(path: str = "text_embeddings.npz"):
+def load_real(path: str = "data/text_embeddings.npz"):
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(
@@ -137,7 +140,7 @@ def run(dataset: str):
         print(f"nprobe={nprobe:>2}  recall@10={recall:.3f}  p50={p50:.3f}ms  "
               f"p99={p99:.3f}ms  QPS={qps:.1f}  speedup={qps / exact_qps:.2f}x")
 
-    csv_path = f"benchmark_{dataset}.csv"
+    csv_path = f"data/benchmark_{dataset}.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         writer.writeheader()
@@ -176,7 +179,7 @@ def plot_pareto(rows, dataset: str):
     ax.set_title(f"IVF-Flat Recall/QPS Pareto — {dataset}")
     ax.legend()
     fig.tight_layout()
-    out_path = f"pareto_{dataset}.png"
+    out_path = f"data/pareto_{dataset}.png"
     fig.savefig(out_path, dpi=150)
     print(f"saved {out_path}")
 
